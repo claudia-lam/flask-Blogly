@@ -30,7 +30,7 @@ class User(db.Model):
     #TODO: add default image
     image_url = db.Column(
         db.String(),
-        nullable=True)
+        nullable=False)
 
 
 

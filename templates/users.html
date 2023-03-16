@@ -1,8 +1,11 @@
 {% extends "base.html" %} {% block title %}User Lists{% endblock %} {% block
 content %}
 <ul>
-  <!-- TODO:loop to append users to list  -->
-  <li></li>
+  {% for user in users %}
+  <li>
+    <a href="/users/{{user.id}}">{{user.first_name}} {{user.last_name}}</a>
+  </li>
+  {% endfor %}
 </ul>
 
 <button>Add user</button>

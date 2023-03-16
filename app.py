@@ -16,3 +16,16 @@ connect_db(app)
 
 app.config['SECRET_KEY'] = "secret-password"
 debug = DebugToolbarExtension(app)
+
+@app.get("/")
+def load_users_homepage():
+    return redirect ("/users")
+
+@app.get("/users")
+def load_users():
+    #access db to pull all users
+    users = db.session.query(User).all()
+
+    #add users to html list
+
+    return render_template("users.html", users=users)
