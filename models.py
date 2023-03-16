@@ -28,7 +28,7 @@ class User(db.Model):
         nullable=False)
 
     #TODO: add default image
-    image_url = db.Column(
+    img_url = db.Column(
         db.String(),
         nullable=False)
 

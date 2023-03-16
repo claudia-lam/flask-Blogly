@@ -29,3 +29,19 @@ def load_users():
     #add users to html list
 
     return render_template("users.html", users=users)
+
+@app.get("/users/new")
+def show_new_user_form():
+    return render_template("new-user-form.html")
+
+@app.post('/users/new')
+def handle_new_user_form():
+    first_name = request.form["first-name"]
+    last_name = request.form["last-name"]
+    img_url = request.form["image-url"]
+
+    new_user = User(first_name=first_name, last_name=last_name, img_url=img_url)
+    db.session.add(new_user)
+    db.session.commit()
+
+    return redirect("/users")
