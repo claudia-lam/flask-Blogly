@@ -1,2 +1,16 @@
-{% extends "base.html" %} {% block title %}User Lists{% endblock %} {% block
-content %} {% endblock %}
+{% extends "base.html" %}
+
+{% block title %} {{user.first_name}}'s Page{% endblock %}
+
+{% block content %}
+<img src=`{{user.img_url}}` alt="">
+<h1>{{user.first_name}} {{user.last_name}}</h1>
+<form action="{{user.id}}/edit">
+  <button type="submit">Edit</button>
+</form>
+
+<form action="{{user.id}}/delete" method="POST">
+  <button>Delete</button>
+</form>
+
+{% endblock %}

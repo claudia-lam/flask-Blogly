@@ -9,8 +9,8 @@ db.create_all()
 
 #add users
 
-madelyn = User(first_name="Madelyn", last_name="Romberg", image_url="")
-claudia = User(first_name="Claudia", last_name="Lam", image_url="")
+madelyn = User(first_name="Madelyn", last_name="Romberg", img_url="")
+claudia = User(first_name="Claudia", last_name="Lam", img_url="")
 
 #add user objects to session
 

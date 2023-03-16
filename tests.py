@@ -37,7 +37,7 @@ class UserViewTestCase(TestCase):
         test_user = User(
             first_name="test1_first",
             last_name="test1_last",
-            image_url=None,
+            img_url=None,
         )
 
         db.session.add(test_user)
