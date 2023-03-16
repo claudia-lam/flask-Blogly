@@ -66,7 +66,7 @@ def show_edit_user_form(user_id):
     return render_template('edit-user-form.html', user=user)
 
 
-@app.post('/users/<user_id>/edit')
+@app.post('/users/<int:user_id>/edit')
 def handle_edit_user_form(user_id):
     """Update user on form submission"""
     user = db.session.query(User).filter(User.id==user_id).one()
