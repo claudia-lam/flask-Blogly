@@ -67,8 +67,8 @@ def show_edit_user_form(id):
 
 @app.post('/users/<id>/edit')
 def handle_edit_user_form(id):
-    """Show edit user form"""
-    user = db.session.query(User).filter(User.id==id)
+    """Update user on form submission"""
+    user = db.session.query(User).filter(User.id==id).one()
 
     first_name = request.form["first-name"]
     last_name = request.form["last-name"]
@@ -77,6 +77,8 @@ def handle_edit_user_form(id):
     user.first_name = first_name
     user.last_name = last_name
     user.img_url = img_url
+
+    db.session.add(user)
     db.session.commit()
 
     return redirect('/users')
