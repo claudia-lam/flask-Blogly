@@ -70,13 +70,9 @@ def handle_edit_user_form(id):
     """Update user on form submission"""
     user = db.session.query(User).filter(User.id==id).one()
 
-    first_name = request.form["first-name"]
-    last_name = request.form["last-name"]
-    img_url = request.form["img-url"]
-
-    user.first_name = first_name
-    user.last_name = last_name
-    user.img_url = img_url
+    user.first_name = request.form["first-name"]
+    user.last_name = request.form["last-name"]
+    user.img_url= request.form["img-url"]
 
     db.session.add(user)
     db.session.commit()
