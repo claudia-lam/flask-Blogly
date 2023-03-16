@@ -12,6 +12,7 @@ def connect_db(app):
 
 
 class User(db.Model):
+    """stores user profile information """
     __tablename__ = "users"
 
     id = db.Column(

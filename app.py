@@ -50,25 +50,26 @@ def handle_new_user_form():
 
     return redirect("/users")
 
-@app.get('/users/<id>')
-def show_user_page(id):
+@app.get('/users/<int:user_id>')
+def show_user_page(user_id):
     """show individual user page"""
-    user = db.session.query(User).filter(User.id==id).one()
+    # user = db.session.query(User).filter(User.id==user_id).one()
+    user = User.query.get_or_404(user_id)
 
     return render_template("user-detail.html", user=user)
 
-@app.get('/users/<id>/edit')
-def show_edit_user_form(id):
+@app.get('/users/<user_id>/edit')
+def show_edit_user_form(user_id):
     """Show edit user form"""
-    user = db.session.query(User).filter(User.id==id).one()
+    user = db.session.query(User).filter(User.id==user_id).one()
 
     return render_template('edit-user-form.html', user=user)
 
 
-@app.post('/users/<id>/edit')
-def handle_edit_user_form(id):
+@app.post('/users/<user_id>/edit')
+def handle_edit_user_form(user_id):
     """Update user on form submission"""
-    user = db.session.query(User).filter(User.id==id).one()
+    user = db.session.query(User).filter(User.id==user_id).one()
 
     user.first_name = request.form["first-name"]
     user.last_name = request.form["last-name"]
@@ -78,5 +79,20 @@ def handle_edit_user_form(id):
     db.session.commit()
 
     return redirect('/users')
+
+@app.post('/users/<user_id>/delete')
+def delete_user(user_id):
+    """Delete user"""
+    user = db.session.query(User).filter(User.id==user_id).one()
+
+    db.session.delete(user)
+    db.session.commit()
+
+    return redirect('/users')
+
+
+
+
+
 
 
