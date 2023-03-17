@@ -34,12 +34,15 @@ class User(db.Model):
         db.String(),
         nullable=False)
 
+    #links post to user
     posts = db.relationship(
         "Post",
         backref="user")
 
 class Post(db.Model):
-    """Post for user's blog"""
+    """Post for user's blog
+       backref="user"
+    """
     __tablename__ = "posts"
 
     id = db.Column(

@@ -55,7 +55,6 @@ def show_user_page(user_id):
     """show individual user page"""
     user = User.query.get_or_404(user_id)
     # posts = db.session.query(Post).filter(Post.user_id==user_id).all()
-    breakpoint()
     return render_template("user-detail.html", user=user)
 
 @app.get('/users/<user_id>/edit')
@@ -98,7 +97,6 @@ def show_new_post_form(user_id):
 @app.post("/users/<int:user_id>/posts/new")
 def handle_new_post_form(user_id):
 
-
     post_title = request.form['post-title']
     post_content = request.form["post-content"]
 
@@ -110,6 +108,15 @@ def handle_new_post_form(user_id):
     db.session.commit()
 
     return redirect(f"/users/{user_id}")
+
+@app.get("/users/posts/<int:post_id>")
+def show_post(post_id):
+
+        post = Post.query.get_or_404(post_id)
+
+        return render_template('post.html', post=post)
+
+
 
 
 
