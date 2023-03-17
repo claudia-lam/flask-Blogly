@@ -3,7 +3,7 @@
 import os
 
 from flask import Flask, request, redirect, render_template
-from models import db, connect_db, User
+from models import db, connect_db, User, Post
 from flask_debugtoolbar import DebugToolbarExtension
 
 app = Flask(__name__)
@@ -53,15 +53,15 @@ def handle_new_user_form():
 @app.get('/users/<int:user_id>')
 def show_user_page(user_id):
     """show individual user page"""
-    # user = db.session.query(User).filter(User.id==user_id).one()
     user = User.query.get_or_404(user_id)
-
+    # posts = db.session.query(Post).filter(Post.user_id==user_id).all()
+    breakpoint()
     return render_template("user-detail.html", user=user)
 
 @app.get('/users/<user_id>/edit')
 def show_edit_user_form(user_id):
     """Show edit user form"""
-    user = db.session.query(User).filter(User.id==user_id).one()
+    user = User.query.get_or_404(user_id)
 
     return render_template('edit-user-form.html', user=user)
 
@@ -69,7 +69,7 @@ def show_edit_user_form(user_id):
 @app.post('/users/<int:user_id>/edit')
 def handle_edit_user_form(user_id):
     """Update user on form submission"""
-    user = db.session.query(User).filter(User.id==user_id).one()
+    user = User.query.get_or_404(user_id)
 
     user.first_name = request.form["first-name"]
     user.last_name = request.form["last-name"]
@@ -80,7 +80,7 @@ def handle_edit_user_form(user_id):
 
     return redirect('/users')
 
-@app.post('/users/<user_id>/delete')
+@app.post('/users/<int:user_id>/delete')
 def delete_user(user_id):
     """Delete user"""
     user = db.session.query(User).filter(User.id==user_id).one()
@@ -89,6 +89,30 @@ def delete_user(user_id):
     db.session.commit()
 
     return redirect('/users')
+
+@app.get("/users/<int:user_id>/posts/new")
+def show_new_post_form(user_id):
+    user = User.query.get_or_404(user_id)
+    return render_template("new-post-form.html", user=user)
+
+@app.post("/users/<int:user_id>/posts/new")
+def handle_new_post_form(user_id):
+
+
+    post_title = request.form['post-title']
+    post_content = request.form["post-content"]
+
+    new_post = Post(
+                post_title=post_title,
+                post_content=post_content,
+                user_id=user_id)
+    db.session.add(new_post)
+    db.session.commit()
+
+    return redirect(f"/users/{user_id}")
+
+
+
 
 
 

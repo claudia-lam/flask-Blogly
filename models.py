@@ -15,7 +15,7 @@ def connect_db(app):
 class User(db.Model):
     """User for blogly"""
     __tablename__ = "users"
-
+    #backref to post: 'posts'
     id = db.Column(
         db.Integer,
         primary_key=True,
@@ -34,6 +34,10 @@ class User(db.Model):
         db.String(),
         nullable=False)
 
+    posts = db.relationship(
+        "Post",
+        backref="user")
+
 class Post(db.Model):
     """Post for user's blog"""
     __tablename__ = "posts"
@@ -42,18 +46,18 @@ class Post(db.Model):
         db.Integer,
         primary_key=True,
         autoincrement=True)
-    title = db.Column(
+    post_title = db.Column(
         db.String(100),
         nullable=False
     )
-    content = db.Column(
+    post_content = db.Column(
         db.String(),
         nullable=False
     )
     created_at = db.Column(
         db.DateTime,
         nullable=False,
-        default=datetime.datetime.now
+        default=datetime.datetime.now()
     )
     user_id = db.Column(
         db.Integer,

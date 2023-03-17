@@ -1,6 +1,6 @@
 """Seed file to make sample datat for users db."""
 
-from models import User, db
+from models import User, Post, db
 from app import app
 
 #create all tables
@@ -11,6 +11,8 @@ db.create_all()
 
 madelyn = User(first_name="Madelyn", last_name="Romberg", img_url="")
 claudia = User(first_name="Claudia", last_name="Lam", img_url="")
+
+
 
 #add user objects to session
 
